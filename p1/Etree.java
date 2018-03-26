@@ -64,6 +64,7 @@ public class Etree
                         postfixExpression += stack.pop() + " ";
                 stack.push(c);
                 isOperators = true;
+                ++i;
             }
         }
         if(isOperators == false)
