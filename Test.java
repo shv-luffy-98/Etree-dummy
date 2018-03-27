@@ -4,7 +4,7 @@ class Test
 {
     public static void main(String args[])
     {
-        String a = "a123 - b + c";/*
+        String a = "a + b * c - 56 ^ 2 * ( 2 - a ) / 7";/*
         a += " " + "b";
         System.out.print(a);*/
         Etree b = new Etree();

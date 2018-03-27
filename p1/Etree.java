@@ -35,24 +35,31 @@ public class Etree
                 if(checkFormat(i, n) == false)
                     return false;
                 postfixExpression += c + " ";
-                isOperators = true;
                 ++i;
             }
             else if( Character.isDigit(c) )
             {
-                if(isOperators == true)
-                {
-                    isOperators = false;
-                    k = i;
-                }
-            }
-            else if(c == ' ' && isOperators == false)
-            {
-                postfixExpression += infixExpression.substring(k, i) + " ";
-                isOperators = true;
+                for(k = i + 1; k < n; ++k)
+                    if( Character.isDigit(infixExpression.charAt(k)) == false)
+                        break;
+                postfixExpression += infixExpression.substring(i, k) + " ";        
             }
             else if(c == '(')
                 stack.push(c);
+            else if(c == ')')
+            {
+                if( checkFormat(i, n) == false )
+                    return false;
+                while(stack.isEmpty() == false)
+                    if(stack.peek() != '(')
+                        postfixExpression += stack.pop() + " ";
+                    else 
+                    	break;
+                if(stack.isEmpty() == false)
+                    stack.pop();
+                else
+                    return false;
+            }
             else if(operandCheck(c))
             {
                 if(checkFormat(i, n) == false)
@@ -63,12 +70,9 @@ public class Etree
                     else
                         postfixExpression += stack.pop() + " ";
                 stack.push(c);
-                isOperators = true;
                 ++i;
             }
         }
-        if(isOperators == false)
-        	postfixExpression += infixExpression.substring(k, i);
         while(stack.isEmpty() == false)
             postfixExpression += " " + stack.pop();
         return true;
